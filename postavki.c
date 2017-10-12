@@ -3,18 +3,22 @@
 #include <string.h>
 //using namespace std;
 int N;
+ Probel=" ";
 
 void printmatrix (int **S,int Q,int flag) ///////////////Вывод на экран двумерной матрицы////////////
 {
     int i,j;
-    printf("    ");
+    printf("     |                                    ");
     for (i=0;i<Q;i+=1)
-        printf("   %4d",i+1);
+        printf("  %5d",i+1);
     printf("\n");
 
     for (i=0;i<Q;i+=1)
     {
-        printf("%4d   ",i+1);
+        if (i==Q-1)
+        printf("     ------------------------------>   %4d  ",i+1);
+        else
+        printf("     |                                 %4d  ",i+1);
         for (j=0;j<Q;j+=1)
         {
             if (flag==1)
@@ -30,11 +34,13 @@ void printmatrix (int **S,int Q,int flag) ///////////////Вывод на экран двумерно
 void printmatrixone(int *P, int Q)///////////////Вывод на экран одномерной матрицы////////////
 {
     int i;
+    printf("     |                                ");
     for (i=0;i<Q;i+=1)
     {
         printf("%4d  ",i+1);
     }
     printf("\n");
+    printf("     ------------------------------>  ");
     for (i=0;i<Q;i+=1)
     {
         printf("%4d  ",P[i]);
@@ -118,7 +124,7 @@ int circle (int *S,int Q)
         {
             save=z;
             d=0;
-            //printf("z=%d\n",z+1);
+            //printf("z=%d\n",z+1);//
             color[z]=1;
             put[d]=z;
             d+=1;
@@ -130,18 +136,18 @@ int circle (int *S,int Q)
                 {
                     if(color[y]==1)
                     {
-                        //printf("!!!%d -> %d\n",z+1,y+1);
+                        //printf("!!!%d -> %d\n",z+1,y+1);//
                         return(1);
                     }
                     else
                     {
-                        //printf("%d -> %d\n",z+1,y+1);
+                        //printf("%d -> %d\n",z+1,y+1);//
                         put[d]=y;
                         d+=1;
-                        //printmatrixone(put,Q);
+                        //printmatrixone(put,Q);//
                         prihod[y]=z;
                         color[y]=1;
-                        //printmatrixone(color,Q);
+                        //printmatrixone(color,Q);//
                         z=y;
                         n=1;
                         goto loop1;
@@ -149,12 +155,12 @@ int circle (int *S,int Q)
                 }
                 if((y==Q-1)&&((CopyS[z][y]==-1)||(prihod[z]==y)))
                    {
-                       //printf("d = %d\n",d);
+                       //printf("d = %d\n",d);//
                         if(d>1)
                        {
                            z=put[poiskravn(put,Q,-1)-2];
                            CopyS[z][put[d-1]]=-1;
-                           //printf("udalil [%d][%d]\n",z+1,put[d-1]+1);
+                           //printf("udalil [%d][%d]\n",z+1,put[d-1]+1);//
                            color[put[d-1]]=0;
                            put[d-1]=-1;
                            d-=1;
@@ -179,6 +185,20 @@ int circle (int *S,int Q)
 return (0);
 }
 
+void vadimtupoi()
+{
+    printf("\n\n\n\n\n\n\n\n\n\n\n");
+    printf("      *****************************************************\n");
+    printf("      *                   Vadim stupid.                   *\n");
+    printf("      *                                                   *\n");
+    printf("      *                                                   *\n");
+    printf("      *       I am a program can't do this exercise(      *\n");
+    printf("      *                                                   *\n");
+    printf("      *                                                   *\n");
+    printf("      *  During operation, the program is looping route   *\n");
+    printf("      *****************************************************\n");
+    printf("\n\n\n\n\n\n\n\n\n\n");
+}
 int main ()
 {
 /*
@@ -194,18 +214,18 @@ int main ()
     printmatrix(tes,7,0);
     printf("%d\n\n",maxtwo(tes,6,1));
 */
-    FILE *fp= fopen("start1.txt","r");
+    FILE *fp= fopen("start.txt","r");
     if (fp == NULL)
     {
         printf("\nerror file");getchar();exit(1);
     }
 
 //////////////////////////////////////Начальная инициализация переменных и массивов////////////
-    int flag,i,j,Post=0,Potr=0,nado_strelok=0,kolvo_strelok=0;
+    int flag,i,j,y,Post=0,Potr=0,nado_strelok=0,kolvo_strelok=0;
     int x=0,t=1;
     int s=0;
     j=1;
-    printf("Vvedite kolichestvo vershin - ");
+    printf("Enter the number of vertices - ");
     //scanf("%d",&N);
     fscanf(fp,"%d",&N);////TEST
     flag=1;
@@ -229,7 +249,7 @@ int main ()
 //////////////////////////////////////Заполнение массива смежности///////////////////
     for(i=0;i<N;i+=1)
     {
-        printf("S kakimi vershinami soediniaetsa vershina %d(v konce stavim '0')\n",i+1);
+        printf("With some vertices connected vertex %d(At the end of the input press '0')\n",i+1);
         do
         {
             printf(":");
@@ -244,7 +264,8 @@ int main ()
             }
         }while (t>0);
     }
-    printf("\n");
+    printf("\n\n");
+    printf("[The matrix of connections:]\n");
     printmatrix(F,N,flag);
     printf("\n");
 //##############################################################################################//
@@ -255,7 +276,7 @@ int main ()
         for (j=0;j<N;j+=1)
             if ((F[i][j]==1)&&(FS[i][j]==-1)&&(FS[j][i]==-1))
             {
-                printf("Stoimost perevozki (%d;%d) = ",i+1,j+1);
+                printf("The cost of transportation (%d;%d) = ",i+1,j+1);
                 //scanf("%d",&t);
                 fscanf(fp,"%d",&t);////TEST
                 printf("%d\n",t);////TEST
@@ -263,7 +284,8 @@ int main ()
                 FS[j][i]=t;
             }
 
-    printf("\n");
+    printf("\n\n");
+    printf("[The matrix of transportation costs:]\n");
     printmatrix(FS,N,flag);
     printf("\n");
 //##############################################################################################//
@@ -271,7 +293,7 @@ int main ()
 //////////////////////////////////////Заполнение массива мощности вершин///////////////////
     for (i=0;i<N;i+=1)
     {
-        printf("Moshnosti vershini %d = ",i+1);
+        printf("The power of a vertex %d = ",i+1);
         //scanf("%d",&t);
         fscanf(fp,"%d",&t);////TEST
         printf("%d\n",t);////TEST
@@ -281,21 +303,22 @@ int main ()
         else
         Potr+=(t*(-1));
     }
-    printf("\n");
+    printf("\n\n");
+    printf("[The matrix of power:]\n");
     printmatrixone(Pf,N);
     printf("\n\n");
 //##############################################################################################//
 
-printf("\n////////////////////////////////////////______OBRABOTKA______/////////////////////////////////////\n\n");
+printf("\n////////////////////////////////////////______DATA PROCESSING______/////////////////////////////////////\n\n");
 flag=0;
 
 ///////////////////////////////////Проверка на открытую/закрытую модель, ввод фиктивных элементов//////////////////
 //////////////////////////////и преобразование получившихся массивов в зависимости от фиктивного элемента//////////
     if (Post>Potr)//мощь поставщиков больше мощности потребителей
     {
-        printf("Model otkritaia, moshnost postavshikov > moshnosti potrebiteley\n");
-        printf("Moshnost postavshikov = %d\nmoshnosti potrebiteley = %d\nraznica = %d\n", Post,Potr,Post-Potr);
-        printf("Vvedem fiktivnogo potrebitelia, poluchim:\n");
+        printf("The model is open, the power of suppliers > power of consumers\n");
+        printf("Power of suppliers = %d\nPower of consumers = %d\nInequality = %d\n", Post,Potr,Post-Potr);
+        printf("Enter fictitious consumer, turn:\n");
 
         Pf[N]=((Post-Potr)*(-1));
         for (i=0;i<N+1;i+=1)
@@ -319,22 +342,25 @@ flag=0;
             }
         }
         N+=1;
-        printf("\n");
+        printf("\n\n");
+        printf("[The matrix of connections:]\n");
         printmatrix(F,N,flag);
         printf("\n");
-        printf("\n");
+        printf("\n\n");
+        printf("[The matrix of transportation costs:]\n");
         printmatrix(FS,N,flag);
         printf("\n");
-        printf("\n");
+        printf("\n\n");
+        printf("[The matrix of power:]\n");
         printmatrixone(Pf,N);
         printf("\n");
     }
     else
         if (Post<Potr)//мощь потребителей больше мощности поставщиков
         {
-            printf("Model otkritaia, moshnost potrebiteley > moshnosti postavshikov\n");
-            printf("Moshnost postavshikov = %d\nmoshnosti potrebiteley = %d\nraznica = %d\n", Post,Potr,Potr-Post);
-            printf("Vvedem fiktivnogo postavshika, poluchim:\n");
+            printf("The model is open, the power of suppliers < power of consumers\n");
+            printf("Power of suppliers = %d\nPower of consumers = %d\nInequality = %d\n", Post,Potr,Potr-Post);
+            printf("Enter fictitious supplier, turn:\n");
 
             Pf[N]=(Potr-Post);
             for (i=0;i<N+1;i+=1)
@@ -358,29 +384,35 @@ flag=0;
                 }
             }
             N+=1;
-            printf("\n");
+            printf("\n\n");
+            printf("[The matrix of connections:]\n");
             printmatrix(F,N,flag);
             printf("\n");
-            printf("\n");
+            printf("\n\n");
+            printf("[The matrix of transportation costs:]\n");
             printmatrix(FS,N,flag);
             printf("\n");
-            printf("\n");
+            printf("\n\n");
+            printf("[The matrix of power:]\n");
             printmatrixone(Pf,N);
             printf("\n");
         }
         else
             if (Post==Potr)//мощь потребителей = мощности поставщиков (модель закрытая)
             {
-                printf("Model zakritaya, moshnost potrebiteley = moshnosti postavshikov\n");
-                printf("Moshnost postavshikov = %d\nmoshnosti potrebiteley = %d\n", Post,Potr);
+                printf("The model is closed, the power of suppliers = power of consumers\n");
+                printf("Power of suppliers = %d\nPower of consumers = %d\n", Post,Potr);
 
-                printf("\n");
+                printf("\n\n");
+                printf("[The matrix of connections:]\n");
                 printmatrix(F,N,1);
                 printf("\n");
-                printf("\n");
+                printf("\n\n");
+                printf("[The matrix of transportation costs:]\n");
                 printmatrix(FS,N,1);
                 printf("\n");
-                printf("\n");
+                printf("\n\n");
+                printf("[The matrix of power:]\n");
                 printmatrixone(Pf,N);
                 printf("\n");
             }
@@ -404,6 +436,7 @@ flag=0;
             NachPostTS[i][j]=-1;
         }
     }
+///////////////////////////////////Прокладываем первоначальный план поставок/////////////////////////
     do
     {
 	    for (i=0;i<N;i+=1)
@@ -469,6 +502,7 @@ flag=0;
 	                    NachPost[i][j]=save;
 	                    NachPostTS[i][j]=save;
 	                    NachPostTS[j][i]=save;
+	                    printf("_______Ne pustil %d->%d",i+1,j+1);
 	                }
 	                else
 	                {
@@ -479,8 +513,9 @@ flag=0;
 	            }
 	        }
     }while (zerone(Pfo,N)==0);
-
-	printf("nach post\n");
+//##############################################################################################//
+	printf("\n\n");
+    printf("[The matrix of the initial supply plan:]\n");
 	printmatrix(NachPost,N,flag);
 	printf("\n");
 
@@ -491,28 +526,176 @@ flag=0;
 	            printf("%d -> %d = %d\n",i+1,j+1,NachPost[i][j]);
 	        }
 
-	printf("\n");
-	printf("nado strelok = %d\n",nado_strelok);
-	printf("kol-vo strelok = %d\n",kolvo_strelok);
-	if (nado_strelok!=kolvo_strelok)
-	    printf("!!!___Uslove s kol-vom strelok ne vipolniaetsa____!!!  ->  Vvodim nulevuy strelku\n");
-	printf("\n");
-
-	printf("\n");
+	printf("\n\n");
+    printf("[The matrix of left power:]\n");
 	printmatrixone(Pfo,N);
 	printf("\n");
 
 
-   //NachPostTS[5][6]=3;
-   //NachPostTS[6][5]=3;
-
-    printf("poisk - %d\n",circle(NachPostTS,N));
-    printf("\n");
-	printmatrix(NachPostTS,N,flag);
+	printf("\n");
+	printf("the required number of arrows = %d\n",nado_strelok);
+	printf("the number of arrows = %d\n",kolvo_strelok);
+	if (nado_strelok!=kolvo_strelok)
+	    printf("!!!___Rule the number of pointers is not performed____!!!  ->  Enter zero arrow\n");
 	printf("\n");
 
+/*// Тест провепрки на замкнутость маршрута
+   //NachPostTS[5][6]=3;
+   //NachPostTS[6][5]=3;
+   //NachPostTS[0][9]=1000;
+   //NachPostTS[8][6]=100;
+    printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@poisk - %d\n",circle(NachPostTS,N));
+*/
+///////////////////////////////////Прокладываем нулевую стрелку/////////////////////////
+y=0;
+    do
+    {
+	    for (i=0;i<N;i+=1)
+            {
+                for (j=0;j<N;j+=1)
+                {
+                    /*//^^^^^^^^^
+                    if(Pf[i]>0)
+                    {
+                        printf("Proverka puti iz %d v %d :\n",i+1,j+1);
+                        if (F[i][j]!=1)
+                            printf("Proverka (F[%d][%d]==1) - OTKAZ  |  ",i+1,j+1);
+                        else
+                        {
+                                printf("Proverka (F[%d][%d]==1) - PROSHLO  |  ",i+1,j+1);
+                            if (Pfo[i]<0)
+                                printf("Proverka (Pfo[%d]>0) - OTKAZ  |  ",i+1);
+                            else
+                            {
+                                    printf("Proverka (Pfo[%d]>0) - PROSHLO  |  ",i+1);
+                                if (Pfo[j]>0)
+                                    printf("Proverka (Pfo[%d]<0) - OTKAZ  |  ",j+1);
+                                else
+                                {
+                                        printf("Proverka (Pfo[%d]<0) - PROSHLO  |  ",j+1);
+                                    if (Pf[i]<0)
+                                        printf("Proverka (Pf[%d]>0) - OTKAZ  |  ",i+1);
+                                    else
+                                    {
+                                            printf("Proverka (Pf[%d]>0) - PROSHLO  |  ",i+1);
+                                        if (Pf[j]>0)
+                                            printf("Proverka (Pf[%d]<0) - OTKAZ  |  ",j+1);
+                                        else
+                                            printf("Proverka (Pf[%d]<0) - PROSHLO  |  ",j+1);
+                                    }
+                                }
+                            }
+                        }
+                        printf("\n");
+                    }
+                    else
+                    {
+                        if (j==0)
+                        {
+                            printf("Vershina %d - POTREBITEL",i+1);
+                            printf("\n");
+                            printf("\n");
+                        }
+                    }*/
+                    //^^^^^^^^^^
+                    if ((F[i][j]==1)&&(Pf[i]>0)&&(Pf[j]<0)&&(NachPostTS[i][j]==-1))
+                    {
+                        massa=0;
+
+                        save=NachPost[i][j];
+                        NachPost[i][j]=massa;
+                        NachPostTS[i][j]=massa;
+                        NachPostTS[j][i]=massa;
+                        if (circle(NachPostTS,N)==1)
+                        {
+                            NachPost[i][j]=save;
+                            NachPostTS[i][j]=save;
+                            NachPostTS[j][i]=save;
+                            //printf("_______Ne pustil %d->%d\n",i+1,j+1);//
+                        }
+                        else
+                        {
+                            Pfo[i]-=massa;
+                            Pfo[j]+=massa;
+                            kolvo_strelok+=1;
+                            //printf("***********pustil %d->%d\n",i+1,j+1);//
+                            //printf("kolvo_strelok = %d\n",kolvo_strelok);//
+                            break;
+                        }
+                    }
+                }
+                if (kolvo_strelok==nado_strelok) break;
+            }
+            if (kolvo_strelok==nado_strelok) break;
+            y+=1;
+            if (y==3) {vadimtupoi(); return(0);}
+    }while (kolvo_strelok!=nado_strelok);
+//##############################################################################################//
+    printf("\n\n");
+    printf("[The new matrix of the initial supply plan:]\n");
+	printmatrix(NachPost,N,flag);
+	printf("\n");
+    for(i=0;i<N;i+=1)
+	    for(j=0;j<N;j+=1)
+	        if (NachPost[i][j]!=-1)
+	        {
+	            printf("%d -> %d = %d\n",i+1,j+1,NachPost[i][j]);
+	        }
+    printf("\n");
+	printf("the required number of arrows = %d\n",nado_strelok);
+	printf("the number of arrows = %d\n\n",kolvo_strelok);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  fclose(fp);
   system("PAUSE");
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
