@@ -8,6 +8,7 @@ int N;
 void printmatrix (int **S,int Q,int flag) ///////////////Вывод на экран двумерной матрицы////////////
 {
     int i,j;
+
     printf("     |                                    ");
     for (i=0;i<Q;i+=1)
         printf("  %5d",i+1);
@@ -30,28 +31,30 @@ void printmatrix (int **S,int Q,int flag) ///////////////Вывод на экран двумерно
     }
     printf("\n");
 }
-
 void printmatrixone(int *P, int Q)///////////////Вывод на экран одномерной матрицы////////////
 {
     int i;
+
     printf("     |                                ");
     for (i=0;i<Q;i+=1)
     {
         printf("%4d  ",i+1);
     }
+
     printf("\n");
     printf("     ------------------------------>  ");
+
     for (i=0;i<Q;i+=1)
     {
         printf("%4d  ",P[i]);
     }
     printf("\n");
 }
-
 int maxone(int *P,int Q)///////////////Поиск максимального значения в одномерной матрице////////////
 {
     int max=P[0];
     int i;
+
     for (i=1;i<Q;i+=1)
     {
         if (P[i]>max)
@@ -59,11 +62,11 @@ int maxone(int *P,int Q)///////////////Поиск максимального значения в одномерной
     }
     return(max);
 }
-
 int maxtwo(int *S,int Q, int flag)///////////////Поиск максимального значения в двумерной матрице////////////
 {
     int max=*((int *) S + (0 * Q) + 0);
     int i,j;
+
     for (i=0;i<Q;i+=1)
         for (j=0;j<Q;j+=1)
     {
@@ -81,21 +84,33 @@ int maxtwo(int *S,int Q, int flag)///////////////Поиск максимального значения в 
     }
     return(max);
 }
-
+int mmax(int a,int b)
+{
+    if (a>=b)
+        return(a);
+    else return(b);
+}
+int mmin(int a,int b)
+{
+    if (a<b)
+        return(a);
+    else return(b);
+}
 int zerone (int *S,int Q)
 {
     int i;
+
     for (i=0;i<Q;i+=1)
         if (S[i]!=0) return(0);
     return(1);
 }
-
 int poiskravn (int *S,int Q,int y)
 {
     int v;
+
     for (v=0;v<Q;v+=1)
         if (S[v]==y) return (v);
-        return (0);
+        return (-1);
 }
 int circle (int *S,int Q)
 {
@@ -104,6 +119,7 @@ int circle (int *S,int Q)
     int prihod[Q];
     int CopyS[Q][Q];
     int put[Q];
+
     n=0;
     d=0;
     for (z=0;z<Q;z+=1)
@@ -117,7 +133,6 @@ int circle (int *S,int Q)
         prihod[z]=-1;
         put[z]=-1;
     }
-
     prihod[0]=-1;
 
         for (z=0;z<Q;z+=1)
@@ -184,18 +199,47 @@ int circle (int *S,int Q)
 
 return (0);
 }
-
 void vadimtupoi()
 {
     printf("\n\n\n\n\n\n\n\n\n\n\n");
     printf("      *****************************************************\n");
-    printf("      *                   Vadim stupid.                   *\n");
+    printf("      *                   Vadim is stupid.                *\n");
     printf("      *                                                   *\n");
     printf("      *                                                   *\n");
     printf("      *       I am a program can't do this exercise(      *\n");
     printf("      *                                                   *\n");
     printf("      *                                                   *\n");
     printf("      *  During operation, the program is looping route   *\n");
+    printf("      *****************************************************\n");
+    printf("\n\n\n\n\n\n\n\n\n\n");
+}
+void vadimtupoistrelki()
+{
+    printf("\n\n\n\n\n\n\n\n\n\n\n");
+    printf("      *****************************************************\n");
+    printf("      *                   Vadim is stupid.                *\n");
+    printf("      *                                                   *\n");
+    printf("      *                                                   *\n");
+    printf("      *       I am a program can't do this exercise(      *\n");
+    printf("      *                                                   *\n");
+    printf("      *                                                   *\n");
+    printf("      * During operation, the number of arrows more then  *\n");
+    printf("      *    it should be. I can't do anything about it.    *\n");
+    printf("      *****************************************************\n");
+    printf("\n\n\n\n\n\n\n\n\n\n");
+}
+void vadimtupoipotenc()
+{
+    printf("\n\n\n\n\n\n\n\n\n\n\n");
+    printf("      *****************************************************\n");
+    printf("      *                   Vadim is stupid.                *\n");
+    printf("      *                                                   *\n");
+    printf("      *                                                   *\n");
+    printf("      *       I am a program can't do this exercise(      *\n");
+    printf("      *                                                   *\n");
+    printf("      *                                                   *\n");
+    printf("      *         Failed to calculate the potentials        *\n");
+    printf("      *                  of the vertices                  *\n");
     printf("      *****************************************************\n");
     printf("\n\n\n\n\n\n\n\n\n\n");
 }
@@ -214,12 +258,11 @@ int main ()
     printmatrix(tes,7,0);
     printf("%d\n\n",maxtwo(tes,6,1));
 */
-    FILE *fp= fopen("start.txt","r");
+    FILE *fp= fopen("start1.txt","r");
     if (fp == NULL)
     {
         printf("\nerror file");getchar();exit(1);
     }
-
 //////////////////////////////////////Начальная инициализация переменных и массивов////////////
     int flag,i,j,y,Post=0,Potr=0,nado_strelok=0,kolvo_strelok=0;
     int x=0,t=1;
@@ -244,7 +287,6 @@ int main ()
      //printmatrix(SS,N);
      //printmatrixone(P,N);
 //##############################################################################################//
-
 
 //////////////////////////////////////Заполнение массива смежности///////////////////
     for(i=0;i<N;i+=1)
@@ -309,7 +351,7 @@ int main ()
     printf("\n\n");
 //##############################################################################################//
 
-printf("\n////////////////////////////////////////______DATA PROCESSING______/////////////////////////////////////\n\n");
+printf("\n\n              ////////////////////////////////////////______DATA PROCESSING______/////////////////////////////////////\n\n");
 flag=0;
 
 ///////////////////////////////////Проверка на открытую/закрытую модель, ввод фиктивных элементов//////////////////
@@ -436,6 +478,12 @@ flag=0;
             NachPostTS[i][j]=-1;
         }
     }
+
+
+
+
+
+    printf("\n\n\n                        ///////////////////////______INITIAL SUPPLY PLAN______///////////////////////");
 ///////////////////////////////////Прокладываем первоначальный план поставок/////////////////////////
     do
     {
@@ -535,9 +583,14 @@ flag=0;
 	printf("\n");
 	printf("the required number of arrows = %d\n",nado_strelok);
 	printf("the number of arrows = %d\n",kolvo_strelok);
-	if (nado_strelok!=kolvo_strelok)
+	if (nado_strelok>kolvo_strelok)
 	    printf("!!!___Rule the number of pointers is not performed____!!!  ->  Enter zero arrow\n");
 	printf("\n");
+	if (nado_strelok<kolvo_strelok)
+	    {
+	        vadimtupoistrelki();
+	        return(0);
+	    }
 
 /*// Тест провепрки на замкнутость маршрута
    //NachPostTS[5][6]=3;
@@ -546,112 +599,281 @@ flag=0;
    //NachPostTS[8][6]=100;
     printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@poisk - %d\n",circle(NachPostTS,N));
 */
-///////////////////////////////////Прокладываем нулевую стрелку/////////////////////////
-y=0;
-    do
+///////////////////////////////////Прокладываем нулевую стрелку по необходимости/////////////////////////
+//NachPostTS[0][9]=100;
+    if (nado_strelok!=kolvo_strelok)
     {
-	    for (i=0;i<N;i+=1)
-            {
-                for (j=0;j<N;j+=1)
+        y=0;
+        do
+        {
+            for (i=0;i<N;i+=1)
                 {
-                    /*//^^^^^^^^^
-                    if(Pf[i]>0)
+                    for (j=0;j<N;j+=1)
                     {
-                        printf("Proverka puti iz %d v %d :\n",i+1,j+1);
-                        if (F[i][j]!=1)
-                            printf("Proverka (F[%d][%d]==1) - OTKAZ  |  ",i+1,j+1);
-                        else
+                        /*//^^^^^^^^^
+                        if(Pf[i]>0)
                         {
-                                printf("Proverka (F[%d][%d]==1) - PROSHLO  |  ",i+1,j+1);
-                            if (Pfo[i]<0)
-                                printf("Proverka (Pfo[%d]>0) - OTKAZ  |  ",i+1);
+                            printf("Proverka puti iz %d v %d :\n",i+1,j+1);
+                            if (F[i][j]!=1)
+                                printf("Proverka (F[%d][%d]==1) - OTKAZ  |  ",i+1,j+1);
                             else
                             {
-                                    printf("Proverka (Pfo[%d]>0) - PROSHLO  |  ",i+1);
-                                if (Pfo[j]>0)
-                                    printf("Proverka (Pfo[%d]<0) - OTKAZ  |  ",j+1);
+                                    printf("Proverka (F[%d][%d]==1) - PROSHLO  |  ",i+1,j+1);
+                                if (Pfo[i]<0)
+                                    printf("Proverka (Pfo[%d]>0) - OTKAZ  |  ",i+1);
                                 else
                                 {
-                                        printf("Proverka (Pfo[%d]<0) - PROSHLO  |  ",j+1);
-                                    if (Pf[i]<0)
-                                        printf("Proverka (Pf[%d]>0) - OTKAZ  |  ",i+1);
+                                        printf("Proverka (Pfo[%d]>0) - PROSHLO  |  ",i+1);
+                                    if (Pfo[j]>0)
+                                        printf("Proverka (Pfo[%d]<0) - OTKAZ  |  ",j+1);
                                     else
                                     {
-                                            printf("Proverka (Pf[%d]>0) - PROSHLO  |  ",i+1);
-                                        if (Pf[j]>0)
-                                            printf("Proverka (Pf[%d]<0) - OTKAZ  |  ",j+1);
+                                            printf("Proverka (Pfo[%d]<0) - PROSHLO  |  ",j+1);
+                                        if (Pf[i]<0)
+                                            printf("Proverka (Pf[%d]>0) - OTKAZ  |  ",i+1);
                                         else
-                                            printf("Proverka (Pf[%d]<0) - PROSHLO  |  ",j+1);
+                                        {
+                                                printf("Proverka (Pf[%d]>0) - PROSHLO  |  ",i+1);
+                                            if (Pf[j]>0)
+                                                printf("Proverka (Pf[%d]<0) - OTKAZ  |  ",j+1);
+                                            else
+                                                printf("Proverka (Pf[%d]<0) - PROSHLO  |  ",j+1);
+                                        }
                                     }
                                 }
                             }
-                        }
-                        printf("\n");
-                    }
-                    else
-                    {
-                        if (j==0)
-                        {
-                            printf("Vershina %d - POTREBITEL",i+1);
                             printf("\n");
-                            printf("\n");
-                        }
-                    }*/
-                    //^^^^^^^^^^
-                    if ((F[i][j]==1)&&(Pf[i]>0)&&(Pf[j]<0)&&(NachPostTS[i][j]==-1))
-                    {
-                        massa=0;
-
-                        save=NachPost[i][j];
-                        NachPost[i][j]=massa;
-                        NachPostTS[i][j]=massa;
-                        NachPostTS[j][i]=massa;
-                        if (circle(NachPostTS,N)==1)
-                        {
-                            NachPost[i][j]=save;
-                            NachPostTS[i][j]=save;
-                            NachPostTS[j][i]=save;
-                            //printf("_______Ne pustil %d->%d\n",i+1,j+1);//
                         }
                         else
                         {
-                            Pfo[i]-=massa;
-                            Pfo[j]+=massa;
-                            kolvo_strelok+=1;
-                            //printf("***********pustil %d->%d\n",i+1,j+1);//
-                            //printf("kolvo_strelok = %d\n",kolvo_strelok);//
-                            break;
+                            if (j==0)
+                            {
+                                printf("Vershina %d - POTREBITEL",i+1);
+                                printf("\n");
+                                printf("\n");
+                            }
+                        }*/
+                        //^^^^^^^^^^
+                        if ((F[i][j]==1)&&(Pf[i]>0)&&(Pf[j]<0)&&(NachPostTS[i][j]==-1))
+                        {
+                            massa=0;
+
+                            save=NachPost[i][j];
+                            NachPost[i][j]=massa;
+                            NachPostTS[i][j]=massa;
+                            NachPostTS[j][i]=massa;
+                            if (circle(NachPostTS,N)==1)
+                            {
+                                NachPost[i][j]=save;
+                                NachPostTS[i][j]=save;
+                                NachPostTS[j][i]=save;
+                                //printf("_______Ne pustil %d->%d\n",i+1,j+1);//
+                            }
+                            else
+                            {
+                                Pfo[i]-=massa;
+                                Pfo[j]+=massa;
+                                kolvo_strelok+=1;
+                                //printf("***********pustil %d->%d\n",i+1,j+1);//
+                                //printf("kolvo_strelok = %d\n",kolvo_strelok);//
+                                break;
+                            }
                         }
                     }
+                    if (kolvo_strelok==nado_strelok) break;
                 }
                 if (kolvo_strelok==nado_strelok) break;
-            }
-            if (kolvo_strelok==nado_strelok) break;
-            y+=1;
-            if (y==3) {vadimtupoi(); return(0);}
-    }while (kolvo_strelok!=nado_strelok);
+                y+=1;
+                if (y==3) {vadimtupoi(); return(0);}
+        }while (kolvo_strelok!=nado_strelok);
 //##############################################################################################//
+        printf("\n\n");
+        printf("[The new matrix of the initial supply plan]\n");
+        printf("            [with zero arrow:]\n");
+        printmatrix(NachPost,N,flag);
+        printf("\n");
+        for(i=0;i<N;i+=1)
+            for(j=0;j<N;j+=1)
+                if (NachPost[i][j]!=-1)
+                {
+                    printf("%d -> %d = %d\n",i+1,j+1,NachPost[i][j]);
+                }
+        printf("\n");
+        printf("the required number of arrows = %d\n",nado_strelok);
+        printf("the number of arrows = %d\n\n",kolvo_strelok);
+    }
+
+    printf("\n\n                   ///////////////////////______CHECK THE SUPPLY PLAN ON THE OPTIMALITY______///////////////////////\n");
+    printf("                       /////////////______the calculation of the potentials of the vertices______///////////\n\n");
+    //NachPost[0][9]=-1;
+    //NachPostTS[0][9]=-1;
+    //NachPostTS[9][0]=-1;
+    int potenc[N];
+    int haractr[N][N];
+    int haractrest[N][N];
+    int potest[N];
+    int puut[N];
+    int sv,p,z,fl;
+    p=0;
+    fl=1;
+    for (i=0;i<N;i+=1)
+    {
+        potenc[i]=0;
+        potest[i]=0;
+        puut[i]=-1;
+        for (j=0;j<N;j+=1)
+        {
+            haractr[i][j]=0;
+            haractrest[i][j]=0;
+        }
+    }
+
+    for (i=0;i<N;i+=1)
+    {
+        puut[p]=i;
+        p+=1;
+        loop2:
+        if (puut[0]==-1)
+        {
+            puut[0]=i;
+            p=1;
+        }
+        for (j=0;j<N;j+=1)
+        {
+            if(potest[i]==0)
+            {
+                if(NachPostTS[i][j]!=-1)
+                {
+                    if(potest[j]==1)
+                    {
+                        if(NachPost[j][i]!=-1)
+                        {
+                            potenc[i]=potenc[j]+FS[i][j];
+                            potest[i]=1;
+                        }
+                        else
+                        {
+                            potenc[i]=potenc[j]-FS[i][j];
+                            potest[i]=1;
+                        }
+                    }
+                    fl=1;
+                    for (z=j+1;z<N;z+=1)
+                    {
+                        if(NachPostTS[i][z]!=-1)
+                        {
+                            fl=0;
+                        }
+                    }
+                    if ((fl==1)&&(potest[j]==0)&&(potest[i]==0))
+                    {
+                        potenc[i]=0;
+                        potest[i]=1;
+                        goto loop2;
+                    }
+                }
+            }
+            else //potest[i]==1
+            {
+                if(NachPostTS[i][j]!=-1)
+                {
+                    if(potest[j]==0)
+                    {
+                        if(NachPost[j][i]!=-1)
+                        {
+                            potenc[j]=potenc[i]-FS[i][j];
+                            potest[j]=1;
+                            i=j;
+                            puut[p]=j;
+                            p+=1;
+                            goto loop2;
+                        }
+                        else
+                        {
+                            potenc[j]=potenc[i]+FS[i][j];
+                            potest[j]=1;
+                            i=j;
+                            puut[p]=j;
+                            p+=1;
+                            goto loop2;
+                        }
+                    }
+                    fl=1;
+                    for (z=j+1;z<N;z+=1)
+                    {
+                        if(NachPostTS[i][z]!=-1)
+                        {
+                            fl=0;
+                        }
+                    }
+                    if ((fl==1)&&(potest[j]==1)&&(potest[i]==1)&&(poiskravn(potest,N,0)==-1))
+                        {
+                            //printf("exit");
+                            goto metka;
+                        }
+                    if ((fl==1)&&(potest[j]==1)&&(potest[i]==1))
+                    {
+                        sv=poiskravn(puut,N,-1);
+                        if((sv==1)&&(i==puut[0]))
+                        {
+                            i=poiskravn(potest,N,0);
+                            puut[0]=i;
+                            p=1;
+                            goto loop2;
+                        }
+                        sv=sv-1;
+                        i=puut[sv];
+                        puut[sv]=-1;
+                        p=p-1;
+                        goto loop2;
+                    }
+                }
+            }
+        }
+    }
+    metka:
+
+    if(poiskravn(potest,N,0)==-1)
+    {
+        printf("\n\n");
+        printf("[The matrix of potential:]\n");
+        printmatrixone(potenc,N);
+    }
+    else
+    {
+        vadimtupoipotenc();return(0);
+    }
+    /*
     printf("\n\n");
-    printf("[The new matrix of the initial supply plan:]\n");
-	printmatrix(NachPost,N,flag);
-	printf("\n");
-    for(i=0;i<N;i+=1)
-	    for(j=0;j<N;j+=1)
-	        if (NachPost[i][j]!=-1)
-	        {
-	            printf("%d -> %d = %d\n",i+1,j+1,NachPost[i][j]);
-	        }
+    printf("[The matrix of property potential:]\n");
+    printmatrixone(potest,N);
+    */
+    printf("\n\n\n                       /////////////______the calculation of the characteristics of the ribs______///////////\n\n\n");
+    fl=0;
+    printf("ribs without arrows and their characteristics:\n");
+    for (i=0;i<N;i+=1)
+        for (j=i;j<N;j+=1)
+        {
+            if ((F[i][j]==1)&&(NachPostTS[i][j]==-1))
+            {
+                sv=FS[i][j]-(mmax(potenc[i],potenc[j]))+(mmin(potenc[i],potenc[j]));
+                if(sv<0) fl=1;
+                //printf("(%d;%d) = %d - %d + %d = %d\n",i+1,j+1,FS[i][j],mmax(potenc[i],potenc[j]),mmin(potenc[i],potenc[j]),sv);
+                printf("(%d;%d) = %d\n",i+1,j+1,sv);
+            }
+        }
     printf("\n");
-	printf("the required number of arrows = %d\n",nado_strelok);
-	printf("the number of arrows = %d\n\n",kolvo_strelok);
-
-
-
-
-
-
-
-
+    if (fl==0)
+    {
+        printf("Supply plan is optimal.\n");
+        for(i=0;i<N-1;i+=1)
+            for(j=0;j<N-1;j+=1)
+                if ((NachPost[i][j]!=-1)&&(NachPost[i][j]!=0))
+                {
+                    printf("%d -> %d = %d\n",i+1,j+1,NachPost[i][j]);
+                }
+        return(0);
+    }
 
 
 
