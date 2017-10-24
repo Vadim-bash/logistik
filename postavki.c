@@ -151,7 +151,7 @@ int circle (int *S,int Q)
                 {
                     if(color[y]==1)
                     {
-                        //printf("!!!%d -> %d\n",z+1,y+1);//
+                        printf("!!!%d -> %d\n",z+1,y+1);//
                         return(1);
                     }
                     else
@@ -258,7 +258,7 @@ int main ()
     printmatrix(tes,7,0);
     printf("%d\n\n",maxtwo(tes,6,1));
 */
-    FILE *fp= fopen("start1.txt","r");
+    FILE *fp= fopen("start2.txt","r");
     if (fp == NULL)
     {
         printf("\nerror file");getchar();exit(1);
@@ -703,6 +703,8 @@ flag=0;
         printf("the number of arrows = %d\n\n",kolvo_strelok);
     }
 
+
+    loop11:
     printf("\n\n                   ///////////////////////______CHECK THE SUPPLY PLAN ON THE OPTIMALITY______///////////////////////\n");
     printf("                       /////////////______the calculation of the potentials of the vertices______///////////\n\n");
     //NachPost[0][9]=-1;
@@ -850,6 +852,7 @@ flag=0;
     */
     printf("\n\n\n                       /////////////______the calculation of the characteristics of the ribs______///////////\n\n\n");
     fl=0;
+    int min,mini,minj=0;
     printf("ribs without arrows and their characteristics:\n");
     for (i=0;i<N;i+=1)
         for (j=i;j<N;j+=1)
@@ -860,14 +863,20 @@ flag=0;
                 if(sv<0) fl=1;
                 //printf("(%d;%d) = %d - %d + %d = %d\n",i+1,j+1,FS[i][j],mmax(potenc[i],potenc[j]),mmin(potenc[i],potenc[j]),sv);
                 printf("(%d;%d) = %d\n",i+1,j+1,sv);
+                if (sv<min)
+                {
+                    min=sv;
+                    mini=i;
+                    minj=j;
+                }
             }
         }
     printf("\n");
     if (fl==0)
     {
-        printf("Supply plan is optimal.\n");
-        for(i=0;i<N-1;i+=1)
-            for(j=0;j<N-1;j+=1)
+        printf("Supply plan is optimal.\n\n");
+        for(i=0;i<N;i+=1)
+            for(j=0;j<N;j+=1)
                 if ((NachPost[i][j]!=-1)&&(NachPost[i][j]!=0))
                 {
                     printf("%d -> %d = %d\n",i+1,j+1,NachPost[i][j]);
@@ -875,13 +884,136 @@ flag=0;
         return(0);
     }
 
+    printf("\n\n\n                       ////////////////////////______improving supply plan______/////////////////////\n\n\n");
+   if (potenc[mini]>potenc[minj])
+    {
+        sv=mini;
+        mini=minj;
+        minj=sv;
+    }
+    printf("min=%d  i=%d  j=%d\n",min,mini+1,minj+1);
+    printf("\n\n\n                               ////////////////______Search closed circuit______///////////\n\n\n");
+    p=0;
+    int color[N];
+    for(i=0;i<N;i+=1)
+        {
+            puut[i]=-1;
+            color[i]=0;
+        }
+    puut[0]=minj;
+    color[minj]=1;
+    p+=1;
+    i=minj;
 
+    loop10:
+    for (j=0;j<N;j+=1)
+    {
+        if((i!=mini)&&(j!=minj))
+        {
+            if ((NachPostTS[i][j]!=-1)&&(j==mini))
+            {
+                //printf("i=%d j=%d",i+1,j+1);
+                goto loop12;
+            }
+            else
+                if ((NachPostTS[i][j]!=-1)&&(color[j]==0))
+                {
+                    puut[p]=j;
+                    p+=1;
+                    color[j]=1;
+                    i=j;
+                    goto loop10;
+                }
+            fl=1;
+            for (z=j+1;z<N;z+=1)
+            {
+                if(NachPostTS[i][z]!=-1)
+                {
+                    fl=0;
+                }
+            }
+            if (fl==1)
+            {
+                sv=poiskravn(puut,N,-1);
+                    if((sv==1)&&(i==puut[0]))
+                    {
+                        puut[0]=i;
+                        p=1;
+                        goto loop10;
+                    }
+                    sv=sv-2;
+                    i=puut[sv];
+                    puut[sv+1]=-1;
+                    p=p-1;
+                    goto loop10;
+            }
+        }
+    }
+    loop12:
+    i=0;
+    puut[p]=mini;
+    int protiv[N];
+    for (j=0;j<N;j+=1)
+        protiv[j]=-1;
+    j=0;
+    printf("%d->%d\n",mini+1,minj+1);
+    while(puut[i+1]!=-1)
+    {
+        printf("%d->%d\n",puut[i]+1,puut[i+1]+1);
+        if(NachPost[puut[i]][puut[i+1]]==-1)
+        {
+            protiv[j]=NachPostTS[puut[i]][puut[i+1]];
+            j+=1;
+        }
+        i+=1;
+    }
 
+    printf("\n\n\n                               ////////////////______Correct supply plan______///////////\n\n\n");
 
+    min=protiv[0];
+    for (i=0;i<j;i+=1)
+    {
+        if(protiv[i]<min)
+            min=protiv[i];
+    }
+    //printf("minprotiv=%d\n",min);
 
+    i=0;
+    while(puut[i+1]!=-1)
+    {
+        if(NachPost[puut[i]][puut[i+1]]==-1)
+        {
+            NachPost[puut[i+1]][puut[i]]-=min;
+            NachPostTS[puut[i+1]][puut[i]]-=min;
+            NachPostTS[puut[i]][puut[i+1]]-=min;
+            if(NachPost[puut[i+1]][puut[i]]==0)
+            {
+                NachPost[puut[i+1]][puut[i]]=-1;
+                NachPostTS[puut[i+1]][puut[i]]=-1;
+                NachPostTS[puut[i]][puut[i+1]]=-1;
+            }
+        }
+        else
+        {
+            NachPost[puut[i]][puut[i+1]]+=min;
+            NachPostTS[puut[i+1]][puut[i]]+=min;
+            NachPostTS[puut[i]][puut[i+1]]+=min;
+        }
+        i+=1;
+    }
+    NachPost[mini][minj]=min;
+    NachPostTS[mini][minj]=min;
+    NachPostTS[minj][mini]=min;
+    printf("\n");
+        for(i=0;i<N;i+=1)
+            for(j=0;j<N;j+=1)
+                if (NachPost[i][j]!=-1)
+                {
+                    printf("%d -> %d = %d\n",i+1,j+1,NachPost[i][j]);
+                }
+    printf("\n");
 
-
-
+    goto loop11;
 
 
 
