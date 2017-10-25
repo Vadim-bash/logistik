@@ -151,7 +151,7 @@ int circle (int *S,int Q)
                 {
                     if(color[y]==1)
                     {
-                        printf("!!!%d -> %d\n",z+1,y+1);//
+                        //printf("!!!%d -> %d\n",z+1,y+1);//
                         return(1);
                     }
                     else
@@ -170,10 +170,12 @@ int circle (int *S,int Q)
                 }
                 if((y==Q-1)&&((CopyS[z][y]==-1)||(prihod[z]==y)))
                    {
-                       //printf("d = %d\n",d);//
+                      //printf("d = %d\n",d);//
                         if(d>1)
                        {
-                           z=put[poiskravn(put,Q,-1)-2];
+                           z=poiskravn(put,Q,-1);
+                           if (z==-1){z=Q-1;}else{z=z-2;}
+                           z=put[z];
                            CopyS[z][put[d-1]]=-1;
                            //printf("udalil [%d][%d]\n",z+1,put[d-1]+1);//
                            color[put[d-1]]=0;
@@ -196,7 +198,7 @@ int circle (int *S,int Q)
 
             }
         }
-
+//printf("\ncircle - ok\n");
 return (0);
 }
 void vadimtupoi()
@@ -258,21 +260,23 @@ int main ()
     printmatrix(tes,7,0);
     printf("%d\n\n",maxtwo(tes,6,1));
 */
-    FILE *fp= fopen("start2.txt","r");
+    FILE *fp= fopen("start.txt","r");
     if (fp == NULL)
     {
         printf("\nerror file");getchar();exit(1);
     }
 //////////////////////////////////////Ќачальна€ инициализаци€ переменных и массивов////////////
-    int flag,i,j,y,Post=0,Potr=0,nado_strelok=0,kolvo_strelok=0;
+    int flag,i,j,y,sh,Post=0,Potr=0,nado_strelok=0,kolvo_strelok=0;
     int x=0,t=1;
     int s=0;
+    int NOut=0;
     j=1;
     printf("Enter the number of vertices - ");
     //scanf("%d",&N);
     fscanf(fp,"%d",&N);////TEST
     flag=1;
     printf("%d\n",N);////TEST
+    NOut=N;
     int F[N+1][N+1];
     int FS[N+1][N+1];
     int Pf[N+1];
@@ -350,7 +354,7 @@ int main ()
     printmatrixone(Pf,N);
     printf("\n\n");
 //##############################################################################################//
-
+// printf("N=%d\n",N);
 printf("\n\n              ////////////////////////////////////////______DATA PROCESSING______/////////////////////////////////////\n\n");
 flag=0;
 
@@ -466,85 +470,66 @@ flag=0;
     int Pfo[N];
     int massa;
     int save;
+    int mintomax[N];
+    int kolvocontactov[N];
+    sh=0;
    // printf("%d\n\n",flag);
 
     nado_strelok=N-1;
     for (i=0;i<N;i+=1)
     {
         Pfo[i]=Pf[i];
+        mintomax[i]=i;
+        kolvocontactov[i]=0;
         for (j=0;j<N;j+=1)
         {
             NachPost[i][j]=-1;
             NachPostTS[i][j]=-1;
         }
     }
+   // printf("N=%d\n",N);
 
+    for(j=0;j<N;j+=1)
+        for (i=0;i<N;i+=1)
+        {
+            if(F[i][j]==1)
+            {
+                kolvocontactov[i]+=1;
+            }
+        }
+printmatrixone(kolvocontactov,N);
+    for(j=0;j<N;j+=1)
+        for (i=0;i<N-1;i+=1)
+        {
+            if(kolvocontactov[mintomax[i]]>kolvocontactov[mintomax[i+1]])
+            {
+                save=mintomax[i];
+                mintomax[i]=mintomax[i+1];
+                mintomax[i+1]=save;
+            }
+        }
 
-
-
-
-    printf("\n\n\n                        ///////////////////////______INITIAL SUPPLY PLAN______///////////////////////");
+    printf("\n\n\n                        ///////////////////////______INITIAL SUPPLY PLAN______///////////////////////\n");
 ///////////////////////////////////ѕрокладываем первоначальный план поставок/////////////////////////
     do
     {
 	    for (i=0;i<N;i+=1)
 	        for (j=0;j<N;j+=1)
 	        {
-	            /*//^^^^^^^^^
-	            if(Pf[i]>0)
-	            {
-	                printf("Proverka puti iz %d v %d :\n",i+1,j+1);
-	                if (F[i][j]!=1)
-	                    printf("Proverka (F[%d][%d]==1) - OTKAZ  |  ",i+1,j+1);
-	                else
-	                {
-	                        printf("Proverka (F[%d][%d]==1) - PROSHLO  |  ",i+1,j+1);
-	                    if (Pfo[i]<0)
-	                        printf("Proverka (Pfo[%d]>0) - OTKAZ  |  ",i+1);
-	                    else
-	                    {
-	                            printf("Proverka (Pfo[%d]>0) - PROSHLO  |  ",i+1);
-	                        if (Pfo[j]>0)
-	                            printf("Proverka (Pfo[%d]<0) - OTKAZ  |  ",j+1);
-	                        else
-	                        {
-	                                printf("Proverka (Pfo[%d]<0) - PROSHLO  |  ",j+1);
-	                            if (Pf[i]<0)
-	                                printf("Proverka (Pf[%d]>0) - OTKAZ  |  ",i+1);
-	                            else
-	                            {
-	                                    printf("Proverka (Pf[%d]>0) - PROSHLO  |  ",i+1);
-	                                if (Pf[j]>0)
-	                                    printf("Proverka (Pf[%d]<0) - OTKAZ  |  ",j+1);
-	                                else
-	                                    printf("Proverka (Pf[%d]<0) - PROSHLO  |  ",j+1);
-	                            }
-	                        }
-	                    }
-	                }
-	                printf("\n");
-	            }
-	            else
-	            {
-	                if (j==0)
-	                {
-	                    printf("Vershina %d - POTREBITEL",i+1);
-	                    printf("\n");
-	                    printf("\n");
-	                }
-	            }*/
-	            //^^^^^^^^^^
+	            save=j;
+	            j=mintomax[save];
 	            if ((F[i][j]==1)&&(Pfo[i]>0)&&(Pfo[j]<0)&&(Pf[i]>0)&&(Pf[j]<0))
 	            {
 	                if (Pfo[i]>=abs(Pfo[j]))
-	                massa=(abs(Pfo[j]));
+                        massa=(abs(Pfo[j]));
 	                else
-	                massa=Pfo[i];
+                        massa=Pfo[i];
 
 	                save=NachPost[i][j];
 	                NachPost[i][j]=massa;
 	                NachPostTS[i][j]=massa;
 	                NachPostTS[j][i]=massa;
+
 	                if (circle(NachPostTS,N)==1)
 	                {
 	                    NachPost[i][j]=save;
@@ -559,7 +544,9 @@ flag=0;
 	                    kolvo_strelok+=1;
 	                }
 	            }
+	            j=save;
 	        }
+
     }while (zerone(Pfo,N)==0);
 //##############################################################################################//
 	printf("\n\n");
@@ -875,8 +862,8 @@ flag=0;
     if (fl==0)
     {
         printf("Supply plan is optimal.\n\n");
-        for(i=0;i<N;i+=1)
-            for(j=0;j<N;j+=1)
+        for(i=0;i<NOut;i+=1)
+            for(j=0;j<NOut;j+=1)
                 if ((NachPost[i][j]!=-1)&&(NachPost[i][j]!=0))
                 {
                     printf("%d -> %d = %d\n",i+1,j+1,NachPost[i][j]);
@@ -979,6 +966,7 @@ flag=0;
     //printf("minprotiv=%d\n",min);
 
     i=0;
+    fl=0;
     while(puut[i+1]!=-1)
     {
         if(NachPost[puut[i]][puut[i+1]]==-1)
@@ -986,11 +974,12 @@ flag=0;
             NachPost[puut[i+1]][puut[i]]-=min;
             NachPostTS[puut[i+1]][puut[i]]-=min;
             NachPostTS[puut[i]][puut[i+1]]-=min;
-            if(NachPost[puut[i+1]][puut[i]]==0)
+            if((NachPost[puut[i+1]][puut[i]]==0)&&(fl==0))
             {
                 NachPost[puut[i+1]][puut[i]]=-1;
                 NachPostTS[puut[i+1]][puut[i]]=-1;
                 NachPostTS[puut[i]][puut[i+1]]=-1;
+                fl=1;
             }
         }
         else
